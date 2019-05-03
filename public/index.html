@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="./index.css" type="text/css">
+    <title>Blog Posts</title>
+</head>
+
+<body>
+
+    <form id="postForm">
+        <fieldset>
+            <legend> Add new post </legend>
+
+            <label>
+                Title:
+            </label>
+            <div>
+                <input class="postTitle" type="text" />
+            </div>
+
+            <label>
+                Content:
+            </label>
+            <div>
+                <input class="postContent" type="text" />
+            </div>
+
+            <label>
+                Author:
+            </label>
+            <div>
+                <input class="postAuthor" type="text" />
+            </div>
+
+            <button type="submit"> Add </button>
+
+            <div id="postError">
+                </p>
+        </fieldset>
+    </form>
+    <form id="editForm">
+        <fieldset>
+            <legend> Edit post </legend>
+
+            <label>
+                Id:
+            </label>
+            <div>
+                <input class="editId" type="text" />
+            </div>
+
+            <label>
+                Title:
+            </label>
+            <div>
+                <input class="editTitle" type="text" />
+            </div>
+
+            <label>
+                Author:
+            </label>
+            <div>
+                <input class="editAuthor" type="text" />
+            </div>
+
+            <label>
+                Content:
+            </label>
+            <div>
+                <input class="editContent" type="text" />
+            </div>
+
+            <button type="submit"> Edit </button>
+
+            <div id="editError">
+                </p>
+        </fieldset>
+    </form>
+    <form id="deleteForm">
+        <fieldset>
+            <legend> Delete a post </legend>
+
+            <label>
+                <div>
+                    Id: <input class="deleteId" type="text" />
+                </div>
+            </label>
+
+            <button type="submit"> Delete </button>
+
+            <div id="deleteError">
+                </p>
+        </fieldset>
+    </form>
+
+
+
+    <h1> Posts </h1>
+    <ul class="post-list">
+    </ul>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="./script.js"> </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+.idText {
+    font-style: italic;
+}
+
+legend {
+    text-transform: uppercase;
+}
+
+fieldset {
+    border: 2px dashed darkkhaki;
+}
+
+.errorText {
+    color: orangered;
+    font-style: italic;
+}
+
+li {
+    margin: 10px;
+    background-color: bisque;
+    padding: 10px;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    margin: 5px;
+    color: white;
+    border-radius: 5px;
+    background-color: cadetblue;
+}

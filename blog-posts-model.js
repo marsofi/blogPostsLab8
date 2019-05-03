@@ -1,92 +1,125 @@
-const uuid = require('uuid');
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-var postsDB = [{
-        id: uuid.v4(),
-        title: "Calidad",
-        content: "Curso de 12 creditos que incluye labroatorio.",
-        author: "Tec",
-        publishDate: new Date()
+let postSchema = mongoose.Schema({
+    title: {
+        type: String,
+        required: true
     },
-    {
-        id: uuid.v4(),
-        title: "Zumba",
-        content: "Clases de zumba y Strong by Zumba por Ale.",
-        author: "Tec",
-        publishDate: new Date()
+    content: {
+        type: String,
+        required: true
     },
-    {
-        id: uuid.v4(),
-        title: "Viernes Especiales",
-        content: "Celebracion de los logros de la empresa",
-        author: "BluePeople",
-        publishDate: new Date()
+    author: {
+        type: String,
+        required: true
+    },
+    publishDate: {
+        type: Date,
+        required: true
     }
-];
+})
+
+let Posts = mongoose.model('posts', postSchema);
+
 
 const ListPosts = {
-    verifyId(postId) {
-        let found = false;
-        postsDB.forEach(item => {
-            if (item.id == postId) {
-                console.log(true);
-                found = true;
-            }
-        });
-        return found;
-    },
+
     get: function () {
-        return postsDB;
+        return Posts.find()
+            .then(posts => {
+                return posts
+            })
+            .catch(err => {
+                throw new Error(err)
+            });
     },
     getByAuthor: function (author) {
-        let posts = new Array();
-        postsDB.forEach(item => {
-            if (item.author == author) {
-                posts.push(item);
-            }
-        });
-        return posts;
+        return Posts.find({
+                author: author
+            })
+            .then(posts => {
+                if (posts) {
+                    return posts;
+                }
+            })
+            .catch(err => {
+                throw new Error(err);
+            });
+    },
+    getByID: function (id) {
+        return Posts.find({
+                _id: id
+            })
+            .then(post => {
+                if (post) {
+                    return post;
+                }
+            })
+            .catch(err => {
+                throw new Error(err);
+            });
     },
     post: function (title, content, author, date) {
         let item = {
-            id: uuid.v4(),
             title: title,
             content: content,
             author: author,
             publishDate: new Date(date)
         };
 
-        postsDB.push(item);
-        return item;
+        return Posts.create(item)
+            .then(post => {
+                return post;
+            })
+            .catch(err => {
+                throw new Error(err);
+            });
+
     },
     put: function (postId, title, content, author, date) {
+        let item = {};
 
-        let it;
-        postsDB.forEach(item => {
-            if (item.id == postId) {
+        if (title) {
+            item.title = title;
+        }
+        if (content) {
+            item.content = content;
+        }
+        if (author) {
+            item.author = author;
+        }
+        if (date) {
+            item.publishDate = new Date(date);
+        }
 
-                if (title) {
-                    item.title = title;
+        return Posts.findOneAndUpdate({
+                _id: postId
+            }, {
+                $set: item
+            }, {
+                new: false
+            })
+            .then(post => {
+                if (post) {
+                    return post;
                 }
-                if (content) {
-                    item.content = content;
-                }
-                if (author) {
-                    item.author = author;
-                }
-                if (date) {
-                    item.publishDate = new Date(date);
-                }
-                it = item;
-            }
-        });
-        return it;
+            })
+            .catch(err => {
+                throw new Error(err);
+            });
+
     },
     delete: function (postId) {
-        postsDB.forEach((item, index) => {
-            if (item.id == postId) {
-                delete postsDB[index];
-            }
-        });
+        return Posts.findOneAndRemove({
+                _id: postId
+            })
+            .then(post => {
+                return post
+            })
+            .catch(err => {
+                throw new Error(err);
+            })
     },
 }
 
